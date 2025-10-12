@@ -128,7 +128,15 @@ class IntentRouterTool:
 
     def infer_intent(self, utterance: str) -> IntentType:
         utterance = utterance.lower()
-        if "找货" in utterance or "货" in utterance:
+        normalized = utterance.replace(" ", "")
+        freight_keywords = [
+            "找货",
+            "配货",
+            "货源",
+            "推荐货",
+            "有货吗",
+        ]
+        if any(keyword in normalized for keyword in freight_keywords):
             return IntentType.FIND_FREIGHT
         if "资料" in utterance or "画像" in utterance:
             return IntentType.UPDATE_PROFILE
